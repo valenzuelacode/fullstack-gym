@@ -1,0 +1,15 @@
+version: '1'
+
+services:
+  postgres:
+    container_name: postgres_db
+    image: postgres:18
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: usuario
+      POSTGRES_PASSWORD: usuario_1234
+      POSTGRES_DB: gym
+    volumes:
+      - ./data:/var/lib/postgresql
