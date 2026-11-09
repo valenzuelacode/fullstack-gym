@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@next/env": "^16.4.5",
+    "bcrypt": "^6.0.0",
+    "bcryptjs": "^3.0.3",
     "dotenv": "^18.0.9",
     "drizzle-orm": "^1.0.0-rc.5",
     "lucide-react": "^1.69.0",
