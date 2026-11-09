@@ -3,7 +3,8 @@ import {InputHTMLAttributes, ReactNode} from 'react'
 type InputRootProps = InputHTMLAttributes<HTMLInputElement>
 type InputIconProps = {
   children:ReactNode,
-  className?:string
+  className?:string,
+  onClick?:()=>void
 }
 
 
@@ -12,7 +13,7 @@ const InputRoot = ({children,className = '',...props}:InputRootProps)=>{
     <div className={`bg-white px-2 p-2 rounded-xl flex items-center jusitfy-center gap-1 ${className}`}>
       <input
         className='border-none outline-none flex-1'
-          {...props}
+        {...props}
       />
       {
         children ? 
@@ -26,12 +27,14 @@ const InputRoot = ({children,className = '',...props}:InputRootProps)=>{
   )
 }
 
-const InputIcon = ({children,className = ""}:InputIconProps)=>{
+const InputIcon = ({children,className = "",onClick}:InputIconProps)=>{
   return(
-    <span className={className}>{children}</span>
+    <span className={className} onClick={onClick}>
+      {children}
+    </span>
   )
 }
 
-export const Input = Object.assign(InputRoot,{
+export const PasswordInput = Object.assign(InputRoot,{
   Icon:InputIcon
 })

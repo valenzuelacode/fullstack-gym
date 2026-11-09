@@ -6,6 +6,10 @@ First, run the database container using:
 ```bash
     docker compose up -d
 ```
+Configure the database connection using the .env file
+```bash
+    DATABASE_URL=postgres://usuario:usuario_1234@localhost:5432/gym
+```
 
 Then, you should by install the depencencies to can import de database schema from /db/schema.ts runing the followin comand
 ```bash
