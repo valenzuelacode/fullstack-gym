@@ -1,12 +1,13 @@
 'use server'
+import {cookies} from 'next/headers'
 import {AuthSchemaValidation,FormState} from "@/lib/validators/auth";
-import * as encripted from '@/lib/bcrypt/encripted';
-import { db } from "@/db/pg";
-import * as dbSchema from "@/db/pg/schema";
+import UsuarioUseCases from "@/users/application/user.useases";
+import UserRepositoryDrizzle from "@/users/infrastructure/data/drizzle/user.repository.drizzle";
+import User from "@/users/domain/User";
+const usuarioUseCases = new UsuarioUseCases(new UserRepositoryDrizzle());
 
 export async function loginAction(prevState: FormState, formData: FormData): Promise<FormState> {
 
-   console.log(formData)
    const ValidateAuthFields = AuthSchemaValidation.safeParse({
       email:formData.get("email"),
       password:formData.get("password")
@@ -17,17 +18,28 @@ export async function loginAction(prevState: FormState, formData: FormData): Pro
          errors:ValidateAuthFields.error.flatten().fieldErrors,
       }
    }else{
-   
-      console.warn('datos formulario: ', formData)
-      const hashPassword = await encripted.hashPassword(formData.get('password') as string);
-      console.log('hashed password', hashPassword)
-      const user = {
-         email:formData.get('email'),
-         passwod:hashPassword
-      }
+      try{
+         const user:User = {
+            email:formData.get("email") as string,
+            password:formData.get("password") as string,
+         }
+         let usuario = await usuarioUseCases.login(user.email as string,user.password as string);
+         if(!usuario)
+               return {message:'Error al iniciar sesión'}
+         const cookie = await cookies()
+         cookie.set({
+            name:'user',
+            value:JSON.stringify(usuario),
+            httpOnly:true,
+            secure:true,
+            maxAge:60 * 60 * 9
+         })
 
-      return {
-         message: "Login correcto",
+      }catch(error){
+         console.error('Error al iniciar sesión: ', error)
+         if(error instanceof Error)
+            return {message:error.message}
       }
+     
    }
 }

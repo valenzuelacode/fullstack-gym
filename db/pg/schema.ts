@@ -1,6 +1,6 @@
 import {integer,pgTable,varchar,timestamp,text,numeric,date,boolean,snakeCase,pgEnum} from 'drizzle-orm/pg-core';
 
-export const rolesEnum = pgEnum('roles',['customer','admin','superAdmin'])
+export const rolesEnum = pgEnum('roles',['customer','admin','root'])
 export const plansEnum = pgEnum('plans',["free",'basic','pro'])
 
 export const timestamps = {

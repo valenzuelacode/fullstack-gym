@@ -1,3 +1,5 @@
+import { UserProfile } from "@/userProfile/domain/UserProfile"
+
 export default class User{
     id?:number
     email?:string
@@ -10,4 +12,5 @@ export default class User{
     createdAt?:Date
     updatedAt?:Date
     deletedAt?:Date
+    profile?:UserProfile
 }
