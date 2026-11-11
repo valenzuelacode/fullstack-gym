@@ -56,10 +56,13 @@ export async function POST(request:Request)
         profile:UserProfile
     }
 
-    // return Response.json({error:"false",user:User},{status:200})
+    try{
+        const ResUser = await UserUseCases.createUser(User);
+        return Response.json({error:false,user:ResUser},{status:200})
+    }catch(error){
+        console.log("error creando user: ",error)
+        if(error instanceof Error)
+            return Response.json({error:true,message:error.message},{status:400})
+    }
 
-    const ResUser = await UserUseCases.createUser(User);
-    // const user = await UserUseCases.getUserById(2);
-
-    return Response.json({user:ResUser},{status:200})
 }
