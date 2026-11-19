@@ -16,6 +16,7 @@ export default class UserUseCases{
       if(!user)
          throw new Error("Usuario y/o contraseña incorrectos");
       
+      console.log("usuario: ", user)
       const isPasswordValid = await encripted.comparePassword(password,user.password as string);
       
       if(!isPasswordValid)

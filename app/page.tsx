@@ -1,5 +1,5 @@
 'use client'
-import { loginAction } from "@/app/actions/auth";
+import { loginAction } from "@/actions/auth";
 import { AtSign,ArrowUpRight,LockKeyhole,LockKeyholeOpen } from "lucide-react";
 import { LimeButton } from "@/components/ui/buttons/LimeButton";
 import { TextInput } from "@/components/ui/form/TextInput";
@@ -51,7 +51,7 @@ export default function Login() {
             </LimeButton>
 
             {
-              formState?.message && <p className="text-lime-400">{formState.message}</p>
+              formState?.error ? <p className="text-red-500">{formState.message}</p> : <p className="text-lime-500">{formState?.message}</p>
             }
           </form>
         </div>

@@ -13,8 +13,11 @@ export async function loginAction(prevState: FormState, formData: FormData): Pro
       password:formData.get("password")
    })
 
+   console.log("email: ", formData.get('email'),"password: ", formData.get('password'))
+
    if(!ValidateAuthFields.success){
       return {
+         error:true,
          errors:ValidateAuthFields.error.flatten().fieldErrors,
       }
    }else{
@@ -25,8 +28,9 @@ export async function loginAction(prevState: FormState, formData: FormData): Pro
          }
          let usuario = await usuarioUseCases.login(user.email as string,user.password as string);
          if(!usuario)
-               return {message:'Error al iniciar sesión'}
+               return {error:true,message:'Error al iniciar sesión'}
          const cookie = await cookies()
+         
          cookie.set({
             name:'user',
             value:JSON.stringify(usuario),
@@ -38,7 +42,7 @@ export async function loginAction(prevState: FormState, formData: FormData): Pro
       }catch(error){
          console.error('Error al iniciar sesión: ', error)
          if(error instanceof Error)
-            return {message:error.message}
+            return {error:true,message:error.message}
       }
      
    }

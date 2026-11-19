@@ -15,11 +15,15 @@ export default class UserRepositoryDrizzle implements UserRepository{
       
       if(user.length === 0)
          throw new Error("Usuario no encontrado");
+      
+      let userProfile:UserProfile = {
+         role:user[0].userProfile?.role,
+      }
       let userData:User = {
-         id:user[0].id,
-         email:user[0].email,
-         firstName:user[0].firstName,
-         profile:user[0].userProfile,
+         id:user[0].user.id,
+         email:user[0].user.email,
+         firstName:user[0].user.firstName,
+         profile:userProfile,
       }
       return userData;
    }
@@ -35,11 +39,13 @@ export default class UserRepositoryDrizzle implements UserRepository{
 
       let userProfile:UserProfile = {
          role:user[0].userProfile?.role,
+         plan:user[0].userProfile?.plan
       }
       let userData:User = {
-         id:user[0].id,
-         email:user[0].email,
-         firstName:user[0].firstName,
+         id:user[0].user.id,
+         email:user[0].user.email,
+         firstName:user[0].user.firstName,
+         password:user[0].user.password,
          profile:userProfile
       }
 
